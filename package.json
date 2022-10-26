@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsnd --watch --clear --respawn src/app.ts",
     "postinstall": "tsc",
-    "start": "pm2 start dist/app.js"
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +25,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",
-    "pm2": "^5.2.2",
     "toobusy-js": "^0.5.1",
     "zod": "^3.19.1"
   },
