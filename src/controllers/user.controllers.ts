@@ -18,7 +18,17 @@ export const GetAll = expressAsyncHandler(
       const offset = skip !== undefined ? Number(skip) : 0;
       const user = await User.find().skip(offset).limit(limit);
 
-      res.status(200).json(user);
+      res.status(200).json({
+        meta: {
+          total: user.length,
+        },
+        data: user,
+        links: {
+          self: "https://mkk-book-store.herokuapp.com/api/v1/users",
+          users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+          books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+        },
+      });
     } catch (err) {
       return next(err);
     }
@@ -43,9 +53,18 @@ export const Register = expressAsyncHandler(
       httpOnly: true,
     });
     res.status(202).json({
-      id: user.id,
-      message: "Successfully registered",
-      token,
+      meta: {
+        message: "Register success",
+        id: user.id,
+      },
+      data: {
+        token,
+      },
+      links: {
+        self: "https://mkk-book-store.herokuapp.com/api/v1/usersregister",
+        users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+        books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+      },
     });
   }
 );
@@ -75,7 +94,20 @@ export const Login = expressAsyncHandler(
           httpOnly: true,
         })
         .status(200)
-        .json({ id: user.id, message: "Login Successful", token });
+        .json({
+          meta: {
+            message: "Login successful",
+            id: user.id,
+          },
+          data: {
+            token,
+          },
+          links: {
+            self: "https://mkk-book-store.herokuapp.com/api/v1/users/login",
+            users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+            books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+          },
+        });
     } catch (err) {
       return next(err);
     }
@@ -97,7 +129,18 @@ export const GetById = expressAsyncHandler(
 
       if (!user) return next(createHttpError(404, "User not found"));
 
-      res.status(200).json(user);
+      res.status(200).json({
+        meta: {
+          message: "User found",
+          id: user.id,
+        },
+        data: User,
+        links: {
+          self: `https://mkk-book-store.herokuapp.com/api/v1/users/${user.id}`,
+          users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+          books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+        },
+      });
     } catch (err) {
       return next(err);
     }
@@ -112,7 +155,19 @@ export const Profile = expressAsyncHandler(
         id: user?.sub,
         email: user?.email,
       });
-      res.status(200).json(profile);
+
+      if (!profile)
+        return next(createHttpError(404, "Can't find your profile"));
+
+      res.status(200).json({
+        meta: { id: profile.id },
+        data: profile,
+        links: {
+          self: "https://mkk-book-store.herokuapp.com/api/v1/users/profile",
+          users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+          books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+        },
+      });
     } catch (err) {
       return next(err);
     }
@@ -149,7 +204,17 @@ export const Update = expressAsyncHandler(
 
       if (!user) return next(createHttpError(404, "User not found"));
 
-      res.status(200).json({ message: "Successfully updated", user });
+      res
+        .status(200)
+        .json({
+          meta: { message: "Successfully updated" },
+          data: user,
+          links: {
+            self: "https://mkk-book-store.herokuapp.com/api/v1/users/profile",
+            users: "https://mkk-book-store.herokuapp.com/api/v1/users",
+            books: "https://mkk-book-store.herokuapp.com/api/v1/books",
+          },
+        });
     } catch (err) {
       console.log(err);
       return next(err);
