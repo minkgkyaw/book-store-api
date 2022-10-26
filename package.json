@@ -5,7 +5,9 @@
   "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsnd --watch --clear --respawn src/app.ts"
+    "dev": "tsnd --watch --clear --respawn src/app.ts",
+    "postinstall": "tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
