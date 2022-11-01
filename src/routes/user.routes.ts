@@ -16,7 +16,7 @@ import updateUserSchema from '../schema/update-user-schema';
 
 const router = Router();
 
-router.route('/').get(GetAll);
+router.route('/').get(CheckAuth, GetAll);
 
 router
 	.route('/profile')
