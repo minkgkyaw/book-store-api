@@ -22,7 +22,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "helmet": "^6.0.0",
     "http-errors": "^2.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",
     "toobusy-js": "^0.5.1",
